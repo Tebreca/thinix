@@ -1,7 +1,7 @@
 {...}:
 {
   imports = [
-    ./dnsmasq
+    ./dnsmasq.nix
   ];
 
 }
