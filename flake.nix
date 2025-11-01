@@ -7,7 +7,7 @@
 
   outputs = { self, nixpkgs, ... }@inputs:
   let
-    username="tebreca";
+    username="admin";
     system="x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
@@ -23,6 +23,7 @@
         inherit system;
         modules = [
           ./server
+          ./core
           ./hardware-configuration.nix
         ];
         specialArgs = {
