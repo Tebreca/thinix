@@ -28,6 +28,7 @@
         ];
         specialArgs = {
           host="server";
+          interface ="enp2s0";
           inherit self inputs lib username system;
         };
       };
