@@ -12,7 +12,7 @@
 
   networking = {
     hostName = host;
-    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    networkmanager.enable = true; 
     firewall.enable = false;
   };
   
@@ -21,7 +21,7 @@
 
    users.users."${username}" = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     extraGroups = [ "wheel" ];
      packages = with pkgs; [
        tree
        git
