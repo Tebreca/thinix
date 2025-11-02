@@ -1,4 +1,4 @@
-{pkgs,device, ...}:
+{pkgs,interface, ...}:
 {
   services.dnsmasq = {
     package = pkgs.dnsmasq;

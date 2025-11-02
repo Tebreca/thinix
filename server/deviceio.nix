@@ -3,9 +3,9 @@
   networking.interfaces."${interface}" = {
     useDHCP = false;
     ipv4 = {
-      adresses = [
+      addresses = [
         {
-          adress = "192.168.1.1";
+          address = "192.168.1.1";
           prefixLength = 24;
         }
       ];
