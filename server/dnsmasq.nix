@@ -11,8 +11,8 @@
       dhcp-boot="pxelinux.0";
       enable-tftp=true;
       server=[
-	"1.1.1.1"
-	"8.8.8.8"
+        "1.1.1.1"
+        "8.8.8.8"
       ];
       tftp-root="/srv/tftp"; # TODO: Some proper nix way of configuring this
       log-dhcp=true;
