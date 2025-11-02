@@ -21,6 +21,7 @@
 
    users.users."${username}" = {
      isNormalUser = true;
+     intialPassword = "admin";
      extraGroups = [ "wheel" ];
      packages = with pkgs; [
        tree
