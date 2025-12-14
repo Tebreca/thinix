@@ -6,16 +6,16 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
-  let
+    let
     username="admin";
-    system="x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config = {
-        allowUnfree=true;
-      };
+  system="x86_64-linux";
+  pkgs = import nixpkgs {
+    inherit system;
+    config = {
+      allowUnfree=true;
     };
-    lib = nixpkgs.lib;
+  };
+  lib = nixpkgs.lib;
   in
   {
     nixosConfigurations = {
@@ -32,13 +32,7 @@
           interface ="enp2s0";
           inherit self inputs lib username system;
         };
-
-        client {
-          programs = with pkgs;[
-          ]
-        }
       };
     };
   };
 }
-
