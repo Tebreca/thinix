@@ -1,4 +1,4 @@
-{lib, config, pkgs, ...}:
+{lib, config, pkgs, stdenv, ...}:
 let 
   cfg = config.client;
   lnx = stdenv.mkDerivation {
@@ -42,10 +42,6 @@ in
         url = "https://github.com/torvalds/linux.git";
       };
       description = "The source for the linux kernel to build";
-    }
+    };
   };
-
-  config = {
-    
-  }
 }
