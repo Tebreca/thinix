@@ -24,6 +24,7 @@
         modules = [
           ./server
           ./core
+          ./client
           ./hardware-configuration.nix
         ];
         specialArgs = {
@@ -31,6 +32,11 @@
           interface ="enp2s0";
           inherit self inputs lib username system;
         };
+
+        client {
+          programs = with pkgs;[
+          ]
+        }
       };
     };
   };
