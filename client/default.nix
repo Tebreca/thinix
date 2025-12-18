@@ -2,18 +2,18 @@
 let
 cfg = config.client;
 kernel = pkgs.callPackage ./kernel.nix {
-  inherit pkgs; 
+  pkgs,
   {
     overrides = {
       kernelPatches = cfg.kernel.patches;
     };
-  };
+  }
 };
 initRD = pkgs.callPackage ./intitRD.nix {
-  inherit pkgs;
+  pkgs,
   {
     include = cfg.packages;
-  };
+  }
 };
 tftp-root = pkgs.stdEnv.mkDerivation {
   buildPhase = ''
