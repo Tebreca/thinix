@@ -1,12 +1,14 @@
 {pkgs, ...}:
-{
-  imports = [
-    ./kernel.nix
-  ];
+let
+  kernel = pkgs.callPackage ./kernel.nix {
+    inherit pkgs; 
+    {
+      options = [
 
-  client = {
-    programs = with pkgs; [
-      busybox
-    ];
+      ];
+    };
   };
+in
+{
+  server.serving-root="/srv";
 }
