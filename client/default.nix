@@ -9,13 +9,14 @@ kernel = pkgs.callPackage ./kernel.nix {
     };
   }
 };
-initRD = pkgs.callPackage ./intitRD.nix {
+initRD = pkgs.callPackage ./initRD.nix {
   pkgs,
   {
     include = cfg.packages;
   }
 };
 tftp-root = pkgs.stdEnv.mkDerivation {
+  name="tftp-root"
   buildPhase = ''
   cp ${kernel}/bzImage ./
   cp ${initRD}/initramfs ./
