@@ -16,7 +16,7 @@ initRD = pkgs.callPackage ./intitRD.nix {
   };
 };
 tftp-root = pkgs.stdEnv.mkDerivation {
-  installPhase = ''
+  buildPhase = ''
   cp ${kernel}/bzImage ./
   cp ${initRD}/initramfs ./
   '';
