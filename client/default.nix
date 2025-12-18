@@ -12,7 +12,7 @@ kernel = pkgs.callPackage ./kernel.nix {
 initRD = pkgs.callPackage ./intitRD.nix {
   inherit pkgs;
   {
-    include = cfg.packages
+    include = cfg.packages;
   };
 };
 tftp-root = pkgs.stdEnv.mkDerivation {
