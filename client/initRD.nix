@@ -37,7 +37,8 @@ pkgs.stdenv.mkDerivation {
   name="ramdisk";
 
 # for now a simple setup, configurable later
-  setupPhase = ''
+  unpackPhase = ''
+    cd $src
     mkdir etc dev root home/${username}
     cp  ${pkgs.busybox}/bin ./
     cp ${inittab} ./etc/inittab
@@ -47,6 +48,7 @@ pkgs.stdenv.mkDerivation {
     '';
   
   buildPhase = ''
-    find . | cpio -o -H newc --owner=+0:+0 > ./init.cpio
+    find . | cpio -o -H newc --owner=+0:+0 > $out/init.cpio
+    echo "built!"
     '';
 }
