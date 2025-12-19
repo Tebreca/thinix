@@ -16,10 +16,16 @@ initRD = pkgs.callPackage ./initRD.nix {
   };
 };
 tftp-root = pkgs.stdenv.mkDerivation {
-  name="tftp-root";
-  buildPhase = ''
+
+  name="thinix-tftp-root";
+
+  unpackPhase = ''
   cp ${kernel}/bzImage ./
   cp ${initRD}/init.cpio ./
+  '';
+
+  installPhase = ''
+  cp ./* $out/
   '';
 };
 inherit (lib) mkOption;
