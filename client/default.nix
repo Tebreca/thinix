@@ -25,6 +25,7 @@ tftp-root = pkgs.stdenv.mkDerivation {
   '';
 
   installPhase = ''
+  mkdir -p $out
   cp ./* $out/
   '';
 };
