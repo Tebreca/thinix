@@ -1,11 +1,26 @@
 {pkgs, lib, config, ...}:
 let
 cfg = config.client;
+readConfig =
+  configfile:
+  let
+    matchLine =
+      line:
+      let
+        match = lib.match "(CONFIG_[^=]+)=([ym])" line;
+      in
+      lib.optional (match != null) {
+        name = lib.elemAt match 0;
+        value = lib.elemAt match 1;
+      };
+  in
+  lib.listToAttrs (lib.concatMap matchLine (lib.splitString "\n" (builtins.readFile configfile)));
 kernel = pkgs.callPackage ./kernel.nix {
   inherit pkgs;
   opts = {
     overrides = {
       kernelPatches = cfg.kernel.patches;
+      config = (readconfig ./.config) // cfg.kernel.config;
     };
   };
 };
@@ -29,6 +44,11 @@ in
     kernel = {
       patches = mkOption {
         default = [];
+      };
+      config = mkOption {
+        default = with lib.kernel; {
+            
+        };
       };
     };
     packages = mkOption {
