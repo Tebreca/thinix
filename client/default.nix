@@ -19,7 +19,7 @@ tftp-root = pkgs.stdEnv.mkDerivation {
   name="tftp-root"
   buildPhase = ''
   cp ${kernel}/bzImage ./
-  cp ${initRD}/initramfs ./
+  cp ${initRD}/init.cpio ./
   '';
 };
 inherit (lib) mkOption;

@@ -45,7 +45,6 @@ pkgs.stdenv.mkDerivation {
     '';
   
   buildPhase = ''
-    cd initfiles
-    find . | cpio -o -H newc --owner=+0:+0 > ../init.cpio
+    find . | cpio -o -H newc --owner=+0:+0 > ./init.cpio
     '';
 }
