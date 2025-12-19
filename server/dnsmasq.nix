@@ -1,7 +1,8 @@
 {pkgs,interface, config, lib, ...}:
 let
-  inherit lib.mkOption;
+  inherit (lib) mkOption;
   cfg = config.server;
+in
 {
   config = {
     services.dnsmasq = {

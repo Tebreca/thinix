@@ -1,30 +1,32 @@
 {
   pkgs,
-    opts ? {}
+    opts ? {
+        packages = [];
+        username = "thinix-user";
+        hostname ="thinix-client";
+      }
 }:
 let
-inherit pkgs.lib;
-packages = opts.packages ? with pkgs;[
-
-];
-username = opts.username ? "user";
-host = opts.hostname = "thinix-client";
-inittab = builtins.toFile ''
+inherit (pkgs) lib;
+packages = opts.packages;
+username = opts.username;
+host = opts.hostname;
+inittab = builtins.toFile "inittab" ''
 tty1::respawn:/bin/login -f ${username}
 ::sysinit:/bin/hostname ${host}
 ::sysinit:mount -a
 ::sysinit:/bin/chown c /home/c
 '';
-fstab = builtins.toFile ''
+fstab = builtins.toFile "fstab" ''
 devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
 '';
-path = builtins.toFile "PATH=/bin";
-group = builtins.toFile ''
+path = builtins.toFile "path" "PATH=/bin";
+group = builtins.toFile "group" ''
 root:x:0:
 tty:x:5:${username}
 ${username}::1030:
 '';
-shellprofile = ''
+shellprofile = builtins.toFile ".profile" ''
 PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
 
 alias ls="ls --color=auto"
