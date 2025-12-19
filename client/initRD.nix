@@ -38,7 +38,9 @@ pkgs.stdenv.mkDerivation {
 
 # for now a simple setup, configurable later
   unpackPhase = ''
-    mkdir -r etc dev root home/${username}
+    mkdir -p $src
+    cd $src
+    mkdir -p etc dev root home/${username}
     cp -r ${pkgs.busybox}/bin ./
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
@@ -47,7 +49,12 @@ pkgs.stdenv.mkDerivation {
     '';
   
   buildPhase = ''
-    find . | cpio -o -H newc --owner=+0:+0 > $out/init.cpio
+    find . | cpio -o -H newc --owner=+0:+0 > ./init.cpio
     echo "built!"
     '';
+
+  installPhase = ''
+    mkdir -p $out
+    cp $src/init.cpio $out/
+  '';
 }
