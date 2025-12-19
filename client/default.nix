@@ -20,7 +20,7 @@ kernel = pkgs.callPackage ./kernel.nix {
   opts = {
     overrides = {
       kernelPatches = cfg.kernel.patches;
-      config = (readconfig ./.config) // cfg.kernel.config;
+      config = (readConfig ./.config) // cfg.kernel.config;
     };
   };
 };
