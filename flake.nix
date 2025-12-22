@@ -30,6 +30,7 @@
         specialArgs = {
           host="server";
           interface ="enp2s0";
+          nixpkgs-src = nixpkgs;
           inherit self inputs lib username system;
         };
       };

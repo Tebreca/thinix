@@ -1,78 +1,30 @@
-{pkgs, lib, config, ...}:
+# DO NOT MODIFY, instead configure in ./client.nix
+{pkgs, lib, config, pkgs-src, ...}:
 let
 cfg = config.client;
-readConfig =
-  configfile:
-  let
-    matchLine =
-      line:
-      let
-        match = lib.match "(CONFIG_[^=]+)=([ym])" line;
-      in
-      lib.optional (match != null) {
-        name = lib.elemAt match 0;
-        value = lib.elemAt match 1;
-      };
-  in
-  lib.listToAttrs (lib.concatMap matchLine (lib.splitString "\n" (builtins.readFile configfile)));
-kernel = pkgs.callPackage ./kernel.nix {
-  inherit pkgs;
-  opts = {
-    overrides = {
-      kernelPatches = cfg.kernel.patches;
-      config = (readConfig ./.config) // cfg.kernel.config;
-    };
-  };
-};
-initRD = pkgs.callPackage ./initRD.nix {
-  inherit pkgs;
-  opts = {
-    inherit (cfg) username hostname packages;
-  };
-};
-tftp-root = pkgs.stdenv.mkDerivation {
 
-  name="thinix-tftp-root";
-
-  unpackPhase = ''
-  cp ${kernel}/bzImage ./
-  cp ${initRD}/init.cpio ./
-  '';
-
-  installPhase = ''
-  mkdir -p $out
-  cp ./* $out/
-  '';
+# Some clients have custom needs, for example i586 processors or specific package substitutions
+cpkgs = import pkgs-src {
+  inherit (cfg.arch) system overlays;
 };
-inherit (lib) mkOption;
+
+# Generate the root to be served under tftp. We use our client packages to generate this; we compile custom packages where nescessary
+tftp-root = pkgs.callPackage ./tftp-bundle {
+    pkgs = cpkgs;
+    inherit cfg;
+};
 in
 {
-  options.client = {
-    kernel = {
-      patches = mkOption {
-        default = [];
-      };
-      config = mkOption {
-        default = with lib.kernel; {
-            
-        };
-      };
-    };
-    packages = mkOption {
-      default = with pkgs; [
-        busybox
-      ];
-    };
-    username = mkOption {
-      default = "thinix-user";
-    };
-    hostname = mkOption {
-      default = "thinix-client";
-    };
-  };
+# Options extracted to keep file clean
+  options.client = import ./options.nix {inherit pkgs;};
 
   config = {
-    server.serving-root="${tftp-root}";
-  };
 
+# Pass the serving root generated in this module to the server. This is the module's output
+    server.serving-root="${tftp-root}";
+
+# The configuration file for the client.
+    client = import ./client.nix {inherit lib cpkgs;};
+
+  };
 }
