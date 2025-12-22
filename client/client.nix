@@ -5,9 +5,9 @@
   };
   
   arch = {
-    system = "i686-unknown-linux-gnu"
+    system = "i686-unknown-linux-gnu";
     overlays = [
 
     ];
-  }
+  };
 }

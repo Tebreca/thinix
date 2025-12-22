@@ -1,4 +1,4 @@
-{pkgs, cfg}:
+{lib, pkgs, cfg}:
 let
 readConfig =
   configfile:
@@ -46,4 +46,4 @@ pkgs.stdenv.mkDerivation {
     mkdir -p $out
     cp ./* $out/
           '';
-};
+}

@@ -1,17 +1,17 @@
 # DO NOT MODIFY, instead configure in ./client.nix
-{pkgs, lib, config, pkgs-src, ...}:
+{pkgs, lib, config, nixpkgs-src, ...}:
 let
 cfg = config.client;
 
 # Some clients have custom needs, for example i586 processors or specific package substitutions
-cpkgs = import pkgs-src {
+cpkgs = import nixpkgs-src {
   inherit (cfg.arch) system overlays;
 };
 
 # Generate the root to be served under tftp. We use our client packages to generate this; we compile custom packages where nescessary
-tftp-root = pkgs.callPackage ./tftp-bundle {
+tftp-root = pkgs.callPackage ./tftp-bundle.nix {
     pkgs = cpkgs;
-    inherit cfg;
+    inherit lib cfg;
 };
 in
 {
