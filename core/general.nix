@@ -34,9 +34,13 @@
    };
 
   environment.systemPackages = with pkgs; [
-    vim 
     wget
   ];
+
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
 
  services.openssh.enable = true;
  
