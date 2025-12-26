@@ -33,7 +33,7 @@ alias ls="ls --color=auto"
 alias l="ls -l -A"
 '';
 busybox = pkgs.callPackage ./busybox.nix {
-  inherit (pkgs) stdenv;
+  inherit pkgs;
 };
 in
 pkgs.stdenv.mkDerivation {
@@ -45,7 +45,7 @@ pkgs.stdenv.mkDerivation {
 # for now a simple setup, configurable later
   unpackPhase = ''
     mkdir -p etc dev root home/${username}
-    cp -r ${pkgs.busybox}/bin ./
+    cp -r ${busybox}/bin ./
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/path

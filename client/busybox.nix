@@ -1,7 +1,7 @@
 {pkgs}:
 let
 inherit (pkgs) stdenv;
-src = fetchTarBall {
+src = fetchTarball {
   url="https://git.busybox.net/busybox/snapshot/busybox-1_37_0.tar.bz2";
 };
 cc-chain = stdenv.mkDerivation {
