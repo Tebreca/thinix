@@ -32,6 +32,9 @@ PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
 alias ls="ls --color=auto"
 alias l="ls -l -A"
 '';
+busybox = pkgs.callPackage ./busybox.nix {
+  inherit (pkgs) stdenv;
+};
 in
 pkgs.stdenv.mkDerivation {
   name="ramdisk";
