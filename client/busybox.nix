@@ -1,5 +1,6 @@
-{stdenv}:
+{pkgs}:
 let
+inherit (pkgs) stdenv;
 src = fetchTarBall {
   url="https://git.busybox.net/busybox/snapshot/busybox-1_37_0.tar.bz2";
 };
@@ -25,7 +26,12 @@ stdenv.mkDerivation {
   
   buildInputs = [
     cc-chain
+    pkgs.gnumake
   ];
+
+  configurePhase = ''
+    make defconfig
+  '';
 
   buildPhase = ''
     make CROSS_COMPILE=i586-elf-
