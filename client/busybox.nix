@@ -3,7 +3,7 @@ let
 inherit (pkgs) stdenv;
 src = fetchTarball {
   url="https://git.busybox.net/busybox/snapshot/busybox-1_37_0.tar.bz2";
-  sha256="e6cec62eef380a2f85a71dd2f4eb771f0c10910b4a07d8577aa2d719b1b99580";
+  sha256="13vzf3y60p4rf63ckal9d8bi4iwsv5dgkzm0ga30q2jjbs55lpid";
 };
 cc-chain = stdenv.mkDerivation {
   name = "i586-cc-chain";
