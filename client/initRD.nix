@@ -45,7 +45,7 @@ pkgs.stdenv.mkDerivation {
 # for now a simple setup, configurable later
   unpackPhase = ''
     mkdir -p etc dev root home/${username}
-    cp -r ${pkgs.crossPkgs.i686-embedded.busybox}/bin ./
+    cp -r ${pkgs.busybox}/bin ./
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/path
