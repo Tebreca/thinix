@@ -26,6 +26,7 @@ stdenv.mkDerivation {
   '';
 
   installPhase = ''
-    cp ./arch/x86/boot/bzImage $out
+    mkdir -p $out
+    cp ./arch/x86/boot/bzImage $out/
   '';
 }
