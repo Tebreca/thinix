@@ -1,4 +1,4 @@
-{pkgs}:
+{pkgs, kernel}:
 let
 lib = pkgs.lib;
 inherit (lib) mkOption;
@@ -13,6 +13,10 @@ in
 
       };
     };
+    source = mkOption {
+      default = kernel;
+    };
+
   };
   packages = mkOption {
     default = with pkgs; [
@@ -28,9 +32,6 @@ in
   arch = {
     system = mkOption {
       default = "x86_64-linux";
-    };
-    overlays = mkOption {
-      default = [];
     };
   };
 }

@@ -1,10 +1,31 @@
 {
   pkgs, 
-    opts ? {
-      overrides = {};
-      } 
+  opts 
 }:
 let
- inherit (pkgs) lib;
+ inherit (pkgs) stdenv;
 in
-pkgs.linuxPackages_custom_tinyconfig_kernel.override (opts.overrides)
+stdenv.mkDerivation {
+  name = "thinix-linux-kernel-custom";
+  src = opts.source;
+  buildInputs = with pkgs; [
+    gnumake
+    ncurses
+    flex
+    bison
+    gawk
+    bc
+    elfutils
+    pkg-config
+    glibc
+    stdenv.cc.libc.static
+  ];
+  
+  configurePhase = ''
+    cp ${opts.configFile} ./.config
+  '';
+
+  installPhase = ''
+    cp ./arch/x86/boot/bzImage $out
+  '';
+}

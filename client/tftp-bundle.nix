@@ -1,4 +1,4 @@
-{lib, pkgs, cfg}:
+{lib, pkgs, cfg, ...}:
 let
 readConfig =
   configfile:
@@ -17,10 +17,8 @@ readConfig =
 kernel = pkgs.callPackage ./kernel.nix {
   inherit pkgs;
   opts = {
-    overrides = {
-      kernelPatches = cfg.kernel.patches;
-      config = (readConfig ./.config) // cfg.kernel.config;
-    };
+    source = cfg.kernel.source;
+     configFile = (cfg.kernel.configFile or ./.config);
   };
 };
 

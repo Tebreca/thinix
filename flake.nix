@@ -3,9 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    kernel = {
+      type="github";
+      owner = "torvalds";
+      repo="linux";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, kernel, ... }@inputs:
     let
     username="admin";
   system="x86_64-linux";
@@ -30,8 +36,7 @@
         specialArgs = {
           host="server";
           interface ="enp2s0";
-          nixpkgs-src = nixpkgs;
-          inherit self inputs lib username system;
+          inherit self inputs lib username system kernel;
         };
       };
     };
