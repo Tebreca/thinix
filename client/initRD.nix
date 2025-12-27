@@ -11,7 +11,7 @@ inherit (pkgs) lib;
 inherit (opts) packages username hostname;
 inittab = builtins.toFile "inittab" ''
 tty1::respawn:/bin/login -f ${username}
-::sysinit:/bin/hostname ${host}
+::sysinit:/bin/hostname ${hostname}
 ::sysinit:mount -a
 ::sysinit:/bin/chown ${username} home/${username}
 '';
@@ -52,7 +52,6 @@ pkgs.stdenv.mkDerivation {
   unpackPhase = ''
     mkdir -p etc dev root home/${username}
     cp -r ${pkgs.pkgsCross.gnu32.busybox}/bin ./
-    chmod +s /bin/su
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/path
