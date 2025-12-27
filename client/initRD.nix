@@ -8,7 +8,7 @@
 }:
 let
 inherit (pkgs) lib;
-intherit (opts) packages username hostname;
+inherit (opts) packages username hostname;
 inittab = builtins.toFile "inittab" ''
 tty1::respawn:/bin/login -f ${username}
 ::sysinit:/bin/hostname ${host}
