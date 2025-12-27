@@ -54,7 +54,7 @@ pkgs.stdenv.mkDerivation {
     cp -r ${pkgs.pkgsCross.gnu32.busybox}/bin ./
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
-    cp ${path} ./etc/path
+    cp ${path} ./etc/environment
     cp ${passwd} ./etc/passwd
     cp ${shadow} ./etc/shadow
     cp ${shellprofile} ./home/${username}/.profile
