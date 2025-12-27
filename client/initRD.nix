@@ -32,7 +32,7 @@ shadow = builtins.toFile "shadow" ''
 ${username}::20005::::::
 root::20005::::::
 '';
-hostname = builtins.toFile "hostname" "${hostname}";
+host = builtins.toFile "hostname" "${hostname}";
 shellprofile = builtins.toFile ".profile" ''
 PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
 
@@ -53,7 +53,7 @@ pkgs.stdenv.mkDerivation {
   unpackPhase = ''
     mkdir -p etc dev root home/${username}
     cp -r ${pkgs.pkgsCross.gnu32.busybox}/bin ./
-    cp ${hostname} ./etc/hostname
+    cp ${host} ./etc/hostname
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/environment
