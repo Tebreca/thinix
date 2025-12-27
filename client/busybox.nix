@@ -35,6 +35,7 @@ stdenv.mkDerivation {
   '';
 
   buildPhase = ''
+    export PREFIX="${cc-chain}" 
     make CROSS_COMPILE=i586-elf-
   '';
 }
