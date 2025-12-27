@@ -11,14 +11,14 @@ inherit (pkgs) lib;
 inherit (opts) packages username hostname;
 inittab = builtins.toFile "inittab" ''
 tty1::respawn:/bin/login -f ${username}
-::sysinit:/bin/hostname ${hostname}
+::sysinit:/bin/hostname -F etc/hostname
 ::sysinit:mount -a
 ::sysinit:/bin/chown ${username} home/${username}
 '';
 fstab = builtins.toFile "fstab" ''
 devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
 '';
-path = builtins.toFile "path" "PATH=/bin";
+path = builtins.toFile "environment" "PATH=/bin";
 group = builtins.toFile "group" ''
 root:x:0:
 tty:x:5:${username}
@@ -32,6 +32,7 @@ shadow = builtins.toFile "shadow" ''
 ${username}::20005::::::
 root::20005::::::
 '';
+hostname = builtins.toFile "hostname" "${hostname}";
 shellprofile = builtins.toFile ".profile" ''
 PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
 
@@ -52,6 +53,7 @@ pkgs.stdenv.mkDerivation {
   unpackPhase = ''
     mkdir -p etc dev root home/${username}
     cp -r ${pkgs.pkgsCross.gnu32.busybox}/bin ./
+    cp ${hostname} ./etc/hostname
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/environment
