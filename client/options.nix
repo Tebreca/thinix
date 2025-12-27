@@ -34,4 +34,25 @@ in
       default = "x86_64-linux";
     };
   };
+  bootscript = {
+    kernel = {
+      path = mkOption {
+        default = "bzImage"  
+      };
+      opts = mkOption {
+        default = [
+          "debug"
+        ];
+      };
+    initrd = {
+      path = mkOption {
+        default = "init.cpio"  
+      };
+      opts = mkOption {
+        default = [
+        ];
+      };
+    };
+
+  };
 }

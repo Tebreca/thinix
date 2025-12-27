@@ -29,7 +29,9 @@ initRD = pkgs.callPackage ./initRD.nix {
   };
 };
 
-
+script = import ./bootscript.nix {
+  cfg = cfg.bootscript;
+}
 in
 pkgs.stdenv.mkDerivation {
 
@@ -38,6 +40,7 @@ pkgs.stdenv.mkDerivation {
   unpackPhase = ''
     cp ${kernel}/bzImage ./
     cp ${initRD}/init.cpio ./
+    cp ${script} ./
     '';
 
   installPhase = ''
