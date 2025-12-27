@@ -37,22 +37,22 @@ in
   bootscript = {
     kernel = {
       path = mkOption {
-        default = "bzImage"  
+        default = "bzImage";
       };
       opts = mkOption {
         default = [
           "debug"
         ];
       };
+    };
     initrd = {
       path = mkOption {
-        default = "init.cpio"  
+        default = "init.cpio";
       };
       opts = mkOption {
         default = [
         ];
       };
     };
-
   };
 }

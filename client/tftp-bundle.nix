@@ -28,10 +28,9 @@ initRD = pkgs.callPackage ./initRD.nix {
     inherit (cfg) username hostname packages;
   };
 };
-
 script = import ./bootscript.nix {
   cfg = cfg.bootscript;
-}
+};
 in
 pkgs.stdenv.mkDerivation {
 
