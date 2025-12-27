@@ -17,6 +17,8 @@ cc-chain = stdenv.mkDerivation {
   installPhase = ''
   mkdir -p $out;
   cp -r ./cross/* $out/
+  cd $out/bin
+  chmod +x *
   '';
 
 };
