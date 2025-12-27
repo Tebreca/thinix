@@ -27,17 +27,22 @@ stdenv.mkDerivation {
   name="busybox-thinix";
   inherit src;
   
-  buildInputs = [
-    cc-chain
-    pkgs.gnumake
-  ];
+  buildInputs = 
+   (with pkgs; [
+    stdenv.cc.libc.static
+    glibc
+  ]) ++ (with pkgs.pkgsCross.gnu32; [
+    gnumake
+    gcc
+    flex
+    bison
+    gawk
+    bc
+    elfutils
+    pkg-config
+  ]);
 
   configurePhase = ''
     make defconfig
-  '';
-
-  buildPhase = ''
-    export PREFIX="${cc-chain}" 
-    make CROSS_COMPILE=i586-elf-
   '';
 }

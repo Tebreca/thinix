@@ -45,7 +45,8 @@ pkgs.stdenv.mkDerivation {
 # for now a simple setup, configurable later
   unpackPhase = ''
     mkdir -p etc dev root home/${username}
-    cp -r ${busybox}/bin ./
+    cp -r ${pkgs.pkgsCross.gnu32.busybox}/bin ./
+    chmod +s /bin/su
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/path
