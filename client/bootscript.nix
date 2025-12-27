@@ -19,4 +19,5 @@ in
 builtins.mkFile "pxelinux.0" ''
   kernel ${kernel} ${kernel-opts}
   initrd ${initrd} ${initrd-opts}
+  boot
 '';
