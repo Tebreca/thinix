@@ -1,6 +1,4 @@
-  - Ideally want a custom NixPkgs for each arch -> Big gaming gentoo style
-    - To linux from scratch one must first invent the universal serial bus
-  - Custom kernel compilation
+  - To linux from scratch one must first invent the universal serial bus
   - Programs both server and client side
   - Proper PXE script thing
   - Maybe mutiple sets of images in same tftp-root
