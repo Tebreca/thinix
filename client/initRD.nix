@@ -8,14 +8,12 @@
 }:
 let
 inherit (pkgs) lib;
-packages = opts.packages;
-username = opts.username;
-host = opts.hostname;
+intherit (opts) packages username hostname;
 inittab = builtins.toFile "inittab" ''
 tty1::respawn:/bin/login -f ${username}
 ::sysinit:/bin/hostname ${host}
 ::sysinit:mount -a
-::sysinit:/bin/chown c /home/c
+::sysinit:/bin/chown ${username} home/${username}
 '';
 fstab = builtins.toFile "fstab" ''
 devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
@@ -24,7 +22,15 @@ path = builtins.toFile "path" "PATH=/bin";
 group = builtins.toFile "group" ''
 root:x:0:
 tty:x:5:${username}
-${username}::1030:
+${username}:x:1030:
+'';
+passwd = builtins.toFile "passwd" ''
+root:x:0.0:root:/root:/bin/sh
+${username}:x:1030:1030:/home/${username}:/bin/sh
+'';
+shadow = builtins.toFile "shadow" ''
+${username}::20005::::::
+root::20005::::::
 '';
 shellprofile = builtins.toFile ".profile" ''
 PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
@@ -50,6 +56,8 @@ pkgs.stdenv.mkDerivation {
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
     cp ${path} ./etc/path
+    cp ${passwd} ./etc/passwd
+    cp ${shadow} ./etc/shadow
     cp ${shellprofile} ./home/${username}/.profile
     '';
   
