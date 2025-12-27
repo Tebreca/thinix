@@ -15,7 +15,9 @@ kernel-opts = builtins.toString (cfg.kernel.opts ++ [
 "root=/dev/ram0"
 ]);
 initrd = cfg.initrd.path;
-initrd-opts = builtins.toString (cfg.initrd.path);
+initrd-opts = builtins.toString (cfg.initrd.opts ++ [
+
+]);
 in
 builtins.toFile "pxelinux.0" ''
   kernel ${kernel} ${kernel-opts}

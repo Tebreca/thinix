@@ -39,7 +39,7 @@ pkgs.stdenv.mkDerivation {
   unpackPhase = ''
     cp ${kernel}/bzImage ./
     cp ${initRD}/init.cpio ./
-    cp ${script} ./
+    cp ${script} ./pxelinux.0
     '';
 
   installPhase = ''
