@@ -19,7 +19,8 @@ initrd-opts = builtins.toString (cfg.initrd.opts ++ [
 
 ]);
 in
-builtins.toFile "pxelinux.0" ''
+builtins.toFile "bootscript.ipxe" ''
+#!ipxe
   kernel ${kernel} ${kernel-opts}
   initrd ${initrd} ${initrd-opts}
   boot

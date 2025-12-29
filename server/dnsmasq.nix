@@ -13,7 +13,7 @@ in
         inherit interface;
         bind-interfaces=true;
         dhcp-range="192.168.1.50,192.168.1.150,12h";
-        dhcp-boot="pxelinux.0";
+        dhcp-boot="bootscript.ipxe";
         enable-tftp=true;
         server=[
           "1.1.1.1"
