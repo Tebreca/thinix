@@ -1,6 +1,7 @@
 {
   pkgs, 
-  opts 
+  opts,
+  initRD
 }:
 let
  inherit (pkgs) stdenv;
@@ -23,6 +24,7 @@ stdenv.mkDerivation {
   
   configurePhase = ''
     cp ${opts.configFile} ./.config
+    cp ${initRD}/init.cpio ./init.cpio
   '';
 
   installPhase = ''
