@@ -27,6 +27,10 @@ stdenv.mkDerivation {
     cp ${initRD}/init.cpio ./init.cpio
   '';
 
+  buildPhase = ''
+  make V=1
+  '';
+
   installPhase = ''
     mkdir -p $out
     cp ./arch/x86/boot/bzImage $out/
