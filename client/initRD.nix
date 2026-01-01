@@ -42,6 +42,7 @@ alias l="ls -l -A"
 busybox = pkgs.callPackage ./busybox.nix {
   inherit pkgs;
 };
+init = "${./init}";
 in
 pkgs.stdenv.mkDerivation {
   name="ramdisk";
@@ -60,7 +61,7 @@ pkgs.stdenv.mkDerivation {
     cp ${passwd} ./etc/passwd
     cp ${shadow} ./etc/shadow
     cp ${shellprofile} ./home/${username}/.profile
-    ln ./init /bin/init
+    cp ${init} ./init
     '';
   
   buildPhase = ''
