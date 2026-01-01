@@ -42,7 +42,11 @@ alias l="ls -l -A"
 busybox = pkgs.callPackage ./busybox.nix {
   inherit pkgs;
 };
-init = "${./init}";
+init = builtins.toFile "init" ''
+#!/bin/sh
+mount -a
+/bin/init
+'';
 in
 pkgs.stdenv.mkDerivation {
   name="ramdisk";
