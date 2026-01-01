@@ -60,6 +60,7 @@ pkgs.stdenv.mkDerivation {
     cp ${passwd} ./etc/passwd
     cp ${shadow} ./etc/shadow
     cp ${shellprofile} ./home/${username}/.profile
+    ln ./init /bin/init
     '';
   
   buildPhase = ''
