@@ -1,26 +1,25 @@
 {lib, pkgs, cfg, ...}:
 let
-kernel = pkgs.callPackage ./kernel.nix {
+kernel = pkgs.callPackage ./kernel {
   inherit pkgs;
   opts = {
     source = cfg.kernel.source;
     configFile = (cfg.kernel.configFile or ./.config);
   };
-  initRD = pkgs.callPackage ./initRD.nix {
+  initRD = pkgs.callPackage ./initRD {
     inherit pkgs;
     opts = {
       inherit (cfg) username hostname packages;
     };
   };
 };
-bzImage = ./bzImage;
 in
 pkgs.stdenv.mkDerivation {
 
   name="thinix-tftp-root";
 
   unpackPhase = ''
-    cp ${bzImage} ./bzImage
+    cp ${kernel}/bzImage ./
     '';
 
   installPhase = ''

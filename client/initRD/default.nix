@@ -39,13 +39,14 @@ PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
 alias ls="ls --color=auto"
 alias l="ls -l -A"
 '';
-busybox = pkgs.callPackage ./busybox.nix {
-  inherit pkgs;
-};
+busybox = pkgs.callPackage ./busybox {};
+
 init = builtins.toFile "init" ''
 #!/bin/sh
+chmod +s su
 /bin/init
 '';
+base = ./devices.cpio;
 in
 pkgs.stdenv.mkDerivation {
   name="ramdisk";
@@ -55,8 +56,11 @@ pkgs.stdenv.mkDerivation {
   ];
 # for now a simple setup, configurable later
   unpackPhase = ''
-    mkdir -p etc dev root home/${username}
-    cp -r ${pkgs.pkgsCross.gnu32.busybox}/bin ./
+    mkdir -p etc dev root bin home/${username}
+    cd bin
+    cp ${busybox}/busybox ./busybox
+    ./busybox --list | xargs -n1 ln -s ./busybox
+    cd ..
     cp ${host} ./etc/hostname
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
@@ -65,10 +69,12 @@ pkgs.stdenv.mkDerivation {
     cp ${shadow} ./etc/shadow
     cp ${shellprofile} ./home/${username}/.profile
     cp ${init} ./init
+    chmod +x init;
+    cp ${base} ./init.cpio
     '';
   
   buildPhase = ''
-    find . | cpio -o -H newc --owner=+0:+0 > ./init.cpio
+    find . | cpio -o -A -H newc --owner=+0:+0 -F ./init.cpio
     '';
 
   installPhase = ''

@@ -5,6 +5,7 @@
 }:
 let
  inherit (pkgs) stdenv;
+ configFile = ./.config;
 in
 stdenv.mkDerivation {
   name = "thinix-linux-kernel-custom";
@@ -23,12 +24,12 @@ stdenv.mkDerivation {
   ];
   
   configurePhase = ''
-    cp ${opts.configFile} ./.config
+    cp ${configFile} ./.config
     cp ${initRD}/init.cpio ./init.cpio
   '';
 
   buildPhase = ''
-  make V=1
+    make V=1
   '';
 
   installPhase = ''
