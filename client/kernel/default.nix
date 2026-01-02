@@ -26,7 +26,6 @@ stdenv.mkDerivation {
   configurePhase = ''
     cp ${configFile} ./.config
     cp ${initRD}/init.cpio ./init.cpio
-    
   '';
 
   buildPhase = ''

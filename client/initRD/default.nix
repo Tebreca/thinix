@@ -71,11 +71,11 @@ pkgs.stdenv.mkDerivation {
     cp ${shellprofile} ./home/${username}/.profile
     cp ${init} ./init
     chmod +x init;
-    cp ${base} ./init.cpio
+    cpio -iv < ${base}
     '';
   
   buildPhase = ''
-    find . | cpio -o -A -H newc --owner=+0:+0 -F ./init.cpio
+    find . | cpio -o -H newc --owner=+0:+0 > ./init.cpio
     '';
 
   installPhase = ''
