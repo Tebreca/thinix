@@ -25,7 +25,7 @@ stdenv.mkDerivation {
 
   buildPhase = ''
     export CROSS_COMPILE="''${CC%gcc}"
-    LD_FLAGS="--static" make
+    LD_FLAGS="--static" make V=1
   '';
   installPhase = ''
     mkdir -p $out
