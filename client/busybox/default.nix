@@ -1,12 +1,6 @@
-{}:
+{pkgs, crossPkgs}:
 let
-pkgs = import <nixpkgs> {
-  crossSystem = {
-    config = "i686-unknown-linux-gnu";
-  };
-};
-inherit (pkgs) stdenv;
-
+inherit (crossPkgs) stdenv;
 src = fetchTarball {
   url="https://git.busybox.net/busybox/snapshot/busybox-1_37_0.tar.bz2";
   sha256="13vzf3y60p4rf63ckal9d8bi4iwsv5dgkzm0ga30q2jjbs55lpid";
@@ -17,10 +11,12 @@ stdenv.mkDerivation {
   name="busybox-thinix";
   inherit src;
 
+# We are building the linux kernel against the normal libc.static and glibc, normal gcc is somehow required for busybox
   buildInputs = with pkgs; 
   [
     stdenv.cc.libc.static
     glibc
+    gcc
   ];
 
   configurePhase = ''
@@ -28,7 +24,7 @@ stdenv.mkDerivation {
   '';
 
   buildPhase = ''
-    export CROSS_COMPILE= ''${CC%gcc}
+    export CROSS_COMPILE="''${CC%gcc}"
     LD_FLAGS="--static" make
   '';
   installPhase = ''

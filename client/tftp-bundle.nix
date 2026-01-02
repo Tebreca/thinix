@@ -1,4 +1,4 @@
-{lib, pkgs, cfg, ...}:
+{lib, pkgs, cfg, crossPkgs, ...}:
 let
 kernel = pkgs.callPackage ./kernel {
   inherit pkgs;
@@ -7,7 +7,7 @@ kernel = pkgs.callPackage ./kernel {
     configFile = (cfg.kernel.configFile or ./.config);
   };
   initRD = pkgs.callPackage ./initRD {
-    inherit pkgs;
+    inherit pkgs crossPkgs;
     opts = {
       inherit (cfg) username hostname packages;
     };
