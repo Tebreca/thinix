@@ -39,7 +39,7 @@ PS1='[\[\e[32m\]\u@\h \W\[\e[0m\]]\$ '
 alias ls="ls --color=auto"
 alias l="ls -l -A"
 '';
-busybox = pkgs.callPackage ./busybox {};
+busybox = pkgs.callPackage ../busybox {};
 
 init = builtins.toFile "init" ''
 #!/bin/sh
