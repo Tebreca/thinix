@@ -44,7 +44,7 @@ busybox = pkgs.callPackage ../busybox {inherit pkgs crossPkgs;};
 
 init = builtins.toFile "init" ''
 #!/bin/sh
-chmod +s su
+chmod +s /bin/su
 /bin/init
 '';
 base = ./devices.cpio;
@@ -71,15 +71,14 @@ pkgs.stdenv.mkDerivation {
     cp ${shellprofile} ./home/${username}/.profile
     cp ${init} ./init
     chmod +x init;
-    cpio -iv < ${base}
     '';
   
   buildPhase = ''
-    find . | cpio -o -H newc --owner=+0:+0 > ./init.cpio
     '';
 
   installPhase = ''
     mkdir -p $out
-    cp ./init.cpio $out/
+    cp ${base} $out/init.cpio
+    find . | cpio -oA -H newc --owner=+0:+0 -F $out/init.cpio
   '';
 }
