@@ -44,7 +44,6 @@ busybox = pkgs.callPackage ./busybox.nix {
 };
 init = builtins.toFile "init" ''
 #!/bin/sh
-mount -a
 /bin/init
 '';
 in

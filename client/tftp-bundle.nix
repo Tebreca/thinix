@@ -13,13 +13,14 @@ kernel = pkgs.callPackage ./kernel.nix {
     };
   };
 };
+bzImage = ./bzImage;
 in
 pkgs.stdenv.mkDerivation {
 
   name="thinix-tftp-root";
 
   unpackPhase = ''
-    cp ${kernel}/bzImage ./
+    cp ${bzImage} ./bzImage
     '';
 
   installPhase = ''

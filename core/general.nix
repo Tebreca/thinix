@@ -17,7 +17,7 @@
   networking = {
     hostName = host;
     networkmanager.enable = true; 
-    firewall.enable = false;
+    firewall.enable = true;
   };
   
   time.timeZone = "Europe/Amsterdam";
