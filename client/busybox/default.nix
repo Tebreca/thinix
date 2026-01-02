@@ -11,11 +11,15 @@ stdenv.mkDerivation {
   name="busybox-thinix";
   inherit src;
 
-# We are building the linux kernel against the normal libc.static and glibc, normal gcc is somehow required for busybox
+# We are building the linux kernel against the normal libc.static and glibc
   buildInputs = with pkgs; 
   [
     stdenv.cc.libc.static
     glibc
+  ];
+
+  nativeBuildInputs = with pkgs;
+  [
     gcc
   ];
 
@@ -24,8 +28,7 @@ stdenv.mkDerivation {
   '';
 
   buildPhase = ''
-    export CROSS_COMPILE="''${CC%gcc}"
-    LD_FLAGS="--static" make V=1
+    LD_FLAGS="--static" make V=1 CROSS_COMPILE="''${CC%gcc}"
   '';
   installPhase = ''
     mkdir -p $out
