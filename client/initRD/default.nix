@@ -3,7 +3,7 @@
   crossPkgs,
     opts ? {
         packages = [];
-        username = "thinix-user";
+        username = "thinixuser";
         hostname ="thinix-client";
       }
 }:
@@ -26,7 +26,7 @@ tty:x:5:${username}
 ${username}:x:1030:
 '';
 passwd = builtins.toFile "passwd" ''
-root:x:0.0:root:/root:/bin/sh
+root:x:0:0:root:/root:/bin/sh
 ${username}:x:1030:1030:/home/${username}:/bin/sh
 '';
 shadow = builtins.toFile "shadow" ''
@@ -45,7 +45,7 @@ busybox = pkgs.callPackage ../busybox {inherit pkgs crossPkgs;};
 init = builtins.toFile "init" ''
 #!/bin/sh
 chmod +s /bin/su
-/bin/init
+exec /bin/init
 '';
 base = ./devices.cpio;
 in
