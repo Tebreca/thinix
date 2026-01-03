@@ -74,11 +74,11 @@ pkgs.stdenv.mkDerivation {
     '';
   
   buildPhase = ''
+    find . | cpio -o -H newc --owner=+0:+0 > others.cpio
     '';
 
   installPhase = ''
     mkdir -p $out
-    cp ${base} $out/init.cpio
-    find . | cpio -oA -H newc --owner=+0:+0 -F $out/init.cpio
+    cat ${base} ./others.cpio > $out/init.cpio
   '';
 }
