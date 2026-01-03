@@ -27,7 +27,7 @@ ${username}:x:1030:
 '';
 passwd = builtins.toFile "passwd" ''
 root:x:0:0:root:/root:/bin/sh
-${username}:x:1030:1030:/home/${username}:/bin/sh
+${username}:x:1030:1030::/home/${username}:/bin/sh
 '';
 shadow = builtins.toFile "shadow" ''
 ${username}::20005::::::
