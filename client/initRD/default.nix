@@ -14,8 +14,12 @@ inittab = builtins.toFile "inittab" ''
 ::sysinit:/bin/hostname -F etc/hostname
 ::sysinit:mount -a
 ::sysinit:/bin/chown ${username} home/${username}
-tty1::respawn:/bin/login -f ${username}
+tty0::respawn:/bin/getty -l '/autologin' 38400 tty0
 '';
+autologin = builtins.toFile "autologin" ''
+#!/bin/sh
+exec /bin/login -f ${username}
+''
 fstab = builtins.toFile "fstab" ''
 devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
 '';
@@ -62,6 +66,8 @@ pkgs.stdenv.mkDerivation {
     cp ${busybox}/busybox ./busybox
     ./busybox --list | xargs -n1 ln -s ./busybox
     cd ..
+    cp ${autologin} ./autologin
+    chmod +x ./autologin
     cp ${host} ./etc/hostname
     cp ${inittab} ./etc/inittab
     cp ${fstab} ./etc/fstab
