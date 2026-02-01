@@ -11,10 +11,10 @@ let
 inherit (pkgs) lib;
 inherit (opts) packages username hostname;
 inittab = builtins.toFile "inittab" ''
-tty1::respawn:/bin/login -f ${username}
 ::sysinit:/bin/hostname -F etc/hostname
 ::sysinit:mount -a
 ::sysinit:/bin/chown ${username} home/${username}
+tty1::respawn:/bin/login -f ${username}
 '';
 fstab = builtins.toFile "fstab" ''
 devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
