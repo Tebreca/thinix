@@ -14,12 +14,13 @@ inittab = builtins.toFile "inittab" ''
 ::sysinit:/bin/hostname -F etc/hostname
 ::sysinit:mount -a
 ::sysinit:/bin/chown ${username} home/${username}
-tty0::respawn:/bin/getty -l '/autologin' 38400 tty0
+tty1::respawn:/bin/getty -l '/autologin' 38400 tty1
+ttyS1::respawn:/bin/getty 115200 ttyS1
 '';
 autologin = builtins.toFile "autologin" ''
 #!/bin/sh
 exec /bin/login -f ${username}
-''
+'';
 fstab = builtins.toFile "fstab" ''
 devtmpfs /dev devtmpfs mode=0755,nosuid 0 0
 '';
