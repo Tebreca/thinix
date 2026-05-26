@@ -86,6 +86,6 @@ pkgs.stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out
-    cat ${base} ./others.cpio > $out/init.cpio
+    cp others.cpio $out/init.cpio
   '';
 }
