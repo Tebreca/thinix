@@ -35,6 +35,9 @@
 
   environment.systemPackages = with pkgs; [
     wget
+    tio
+    cmake
+    ncurses
   ];
 
   programs.vim = {
