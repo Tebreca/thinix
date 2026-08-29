@@ -37,7 +37,18 @@
     wget
     tio
     cmake
+    gnumake
     ncurses
+# The following deps are to build linux without all the nix-shell drama
+    flex
+    bison
+    gawk
+    bc
+    elfutils
+    pkg-config
+    glibc
+    gcc
+    stdenv.cc.libc.static
   ];
 
   programs.vim = {
@@ -46,7 +57,7 @@
   };
 
  services.openssh.enable = true;
- 
+
  system.stateVersion = "25.05"; # We're chilling
 
 }

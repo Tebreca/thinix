@@ -13,13 +13,13 @@ in
         inherit interface;
         bind-interfaces=true;
         dhcp-range="192.168.1.50,192.168.1.150,12h";
-        dhcp-boot="bzImage";
+        dhcp-boot="boot.gpxe";
         enable-tftp=true;
         server=[
           "1.1.1.1"
             "8.8.8.8"
         ];
-        tftp-root="${cfg.serving-root}"; 
+        tftp-root="/tftp"; 
           log-dhcp=true;
         log-queries=true;
       };
